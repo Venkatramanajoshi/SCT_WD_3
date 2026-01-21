@@ -37,4 +37,25 @@ No additional setup or dependencies are required.
 
 ---
 
+---
+
+## 🔹 Learning Outcomes
+
+- Improved understanding of JavaScript event handling  
+- Managing game state using arrays  
+- Implementing game logic and winning conditions  
+- Building interactive web-based applications  
+
+---
+
+## 🔹 Author
+
+Venkatramana Joshi  
+Intern — SkillCraft Technology
+
+---
+
+## 🔹 License
+
+This project is created for learning and internship evaluation purposes.
 
