@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tic Tac Toe</title>
+
+<style>
+body{
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+}
+
+.board{
+  display:grid;
+  grid-template-columns:repeat(3,100px);
+  gap:8px;
+  justify-content:center;
+  margin-top:30px;
+}
+
+.cell{
+  width:100px;
+  height:100px;
+  background:#1e293b;
+  font-size:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  border-radius:8px;
+  transition:0.2s;
+}
+
+.cell:hover{
+  background:#334155;
+  transform:scale(1.05);
+}
+
+button{
+  margin-top:20px;
+  padding:8px 15px;
+  border:none;
+  background:#22c55e;
+  cursor:pointer;
+  border-radius:6px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Tic Tac Toe</h1>
+<p id="status">Your turn (X)</p>
+
+<div class="board" id="board"></div>
+
+<button onclick="restart()">Restart</button>
+
+<script>
+let board = ["","","","","","","","",""];
+let current = "X";
+let gameOver = false;
+
+function createBoard(){
+  let b = document.getElementById("board");
+  b.innerHTML="";
+
+  for(let i=0;i<9;i++){
+    let div = document.createElement("div");
+    div.className="cell";
+    div.onclick = ()=>play(i);
+    div.innerText = board[i];
+    b.appendChild(div);
+  }
+}
+
+function play(i){
+  if(board[i]!=="" || gameOver) return;
+
+  board[i] = "X";
+  check();
+
+  if(!gameOver){
+    setTimeout(computerMove,400);
+  }
+
+  createBoard();
+}
+
+function computerMove(){
+  let empty = board
+     .map((v,i)=>v===""?i:null)
+     .filter(v=>v!==null);
+
+  if(empty.length==0) return;
+
+  let move = empty[Math.floor(Math.random()*empty.length)];
+  board[move]="O";
+
+  check();
+  createBoard();
+}
+
+function check(){
+  let win=[
+  [0,1,2],[3,4,5],[6,7,8],
+  [0,3,6],[1,4,7],[2,5,8],
+  [0,4,8],[2,4,6]
+  ];
+
+  for(let c of win){
+    let [a,b,c2]=c;
+    if(board[a] &&
+       board[a]==board[b] &&
+       board[a]==board[c2]){
+
+      document.getElementById("status")
+      .innerText=board[a]+" Wins! 🎉";
+
+      gameOver=true;
+      return;
+    }
+  }
+
+  if(!board.includes("")){
+    document.getElementById("status")
+    .innerText="Draw 😄";
+    gameOver=true;
+  }
+}
+
+function restart(){
+  board=["","","","","","","","",""];
+  gameOver=false;
+  document.getElementById("status")
+  .innerText="Your turn (X)";
+  createBoard();
+}
+
+createBoard();
+</script>
+
+</body>
+</html>
